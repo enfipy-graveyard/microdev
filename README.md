@@ -1,8 +1,9 @@
 # NodeJS Zeit Micro Boilerplate
 
-### Start:
+### Run:
 
-> docker-compose up --build
+> docker-compose build
+> docker-compose up
 
 ### Remove:
 
