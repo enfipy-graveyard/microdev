@@ -12,11 +12,11 @@ services:
       - mongo
   mongo:
     image: mongo:3.6-stretch
-    environment:
-      - MONGO_DATA_DIR=/data/db
     logging:
       driver: none
     ports:
     - "27017:27017"
     volumes:
-    - ./db:/data/db
+    - data:/data/db
+volumes:
+  data:
