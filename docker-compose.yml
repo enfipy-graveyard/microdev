@@ -1,6 +1,10 @@
 version: "3"
+networks:
+  dev:
+volumes:
+  data:
 services:
-  user:
+  web:
     build:
       context: .
       dockerfile: ./docker/dev.Dockerfile
@@ -10,6 +14,9 @@ services:
       - ./app:/app/app
     depends_on:
       - mongo
+    restart: on-failure
+    networks:
+      - dev
   mongo:
     image: mongo:3.6-stretch
     logging:
@@ -18,5 +25,16 @@ services:
     - "27017:27017"
     volumes:
     - data:/data/db
-volumes:
-  data:
+    networks:
+      - dev
+  # Comment this to work on localhost
+  lt:
+    build:
+      context: .
+      dockerfile: ./docker/lt.Dockerfile
+    command: "usr/local/bin/lt --port 3000 -l web -s web-microdev"
+    depends_on:
+      - web
+    restart: on-failure
+    networks:
+      - dev
